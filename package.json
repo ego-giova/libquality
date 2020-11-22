@@ -1,0 +1,67 @@
+{
+  "name": "libquality",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest",
+    "build-docker": "docker build -t libquality:1.0.0 --no-cache .",
+    "run-docker": "docker run -p 3000:8080 -d libquality:1.0.0",
+    "lint": "npx eslint --fix -c .eslintrc --ext .js ./src",
+    "fix": "e./node_modules/.bin/eslint -c .eslintrc ./server --fix --ext .js"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "axios": "^0.21.0",
+    "babel-plugin-transform-builtin-extend": "^1.1.2",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.6.1",
+    "helmet": "^4.2.0",
+    "http-status": "^1.3.2",
+    "mongoose": "^5.10.15",
+    "swagger-ui-express": "^4.1.4",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.6.3",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-babel": "^5.3.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.1.3",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.11.0",
+    "husky": "^4.3.0",
+    "jest": "^26.6.3"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "npm run lint"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ego-giova/libquality.git"
+  },
+  "author": "JGMN",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ego-giova/libquality/issues"
+  },
+  "homepage": "https://github.com/ego-giova/libquality#readme"
+}
