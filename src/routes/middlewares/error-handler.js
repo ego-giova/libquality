@@ -1,7 +1,6 @@
 import httpStatus from 'http-status';
 import Constants from '../../utils/constants';
 import BusinessError from '../../utils/errors/business';
-import UnauthorizedError from '../../utils/errors/unauthorized';
 import LoggerManager from '../../utils/logger-manager';
 
 export default function ErrorHandler(err, req, res) {
@@ -14,13 +13,12 @@ export default function ErrorHandler(err, req, res) {
       error: err.code,
       ...err.options,
     });
-  } else if (err instanceof UnauthorizedError) {
-    res.sendStatus(httpStatus.UNAUTHORIZED);
   } else {
     LoggerManager.serverInternalErrorLogger(err);
 
     if (Constants.env !== 'production') {
-      res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ stack: err.stack, message: err.message, ...err });
+      // res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ stack: err.stack, message: err.message, ...err });
+      res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ message: err.message, ...err });
     } else {
       res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
     }
