@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import axios from 'axios';
 import httpStatus from 'http-status';
 import { handleAxiosError } from '../../utils/utils';
@@ -60,5 +61,19 @@ export default class GithubExternalService {
     }
 
     return response;
+  }
+
+  static async getAllRepositoryOpenIssues(owner, repository) {
+    const issues = [];
+    let page = 1;
+    let hasIssues = await GithubExternalService.getRepositoryOpenIssues(owner, repository, page);
+
+    while (hasIssues && hasIssues.length) {
+      issues.push(...hasIssues);
+      page += 1;
+      hasIssues = await GithubExternalService.getRepositoryOpenIssues(owner, repository, page);
+    }
+
+    return issues;
   }
 }
