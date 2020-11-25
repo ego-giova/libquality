@@ -8,5 +8,6 @@ router.get('/status', async (req, res) => res.json({
 }));
 
 router.use('/libraries', require('./library').default);
+router.use('/metrics', require('./metrics').default);
 
 export default router;
