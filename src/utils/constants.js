@@ -20,5 +20,7 @@ export default class Constants {
 
   static github = {
     host: process.env.GITHUB_HOST,
+    username: process.env.GITHUB_USERNAME,
+    personalToken: process.env.GITHUB_PERSONALTOKEN,
   }
 }

@@ -26,7 +26,12 @@ export default class GithubExternalService {
     let response = null;
 
     try {
-      response = await axios.get(`${Constants.github.host}/repositories/${id}`);
+      response = await axios.get(`${Constants.github.host}/repositories/${id}`, {
+        auth: {
+          username: Constants.github.username,
+          password: Constants.github.personalToken,
+        },
+      });
 
       if (response && response.data) {
         response = response.data;
@@ -47,7 +52,12 @@ export default class GithubExternalService {
 
     try {
       response = await axios.get(`${Constants.github.host}/repos/${owner}/${repository}/issues`
-        + `?state=open&sort=created&page=${page}&per_page=100`);
+        + `?state=open&sort=created&page=${page}&per_page=100`, {
+        auth: {
+          username: Constants.github.username,
+          password: Constants.github.personalToken,
+        },
+      });
 
       if (response && response.data) {
         response = response.data;
