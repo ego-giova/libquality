@@ -1,1 +1,144 @@
-{}
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "LibQuality Tool",
+    "description": "Search and collect metrics from github projects",
+    "contact": {
+      "email": "jacomogiovanettimn@gmail.com"
+    },
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "/api"
+    }
+  ],
+  "paths": {
+    "/libraries": {
+      "get": {
+        "tags": [
+          "Library"
+        ],
+        "summary": "Search github libraries by filters provided",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "type": "string",
+            "required": true,
+            "description": "Name of the library to search",
+            "example": "React"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return a list of libraries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "example": {
+                    "response": [
+                      {
+                        "id": 10270250,
+                        "name": "react",
+                        "full_name": "facebook/react"
+                      },
+                      {
+                        "id": 135786093,
+                        "name": "react",
+                        "full_name": "typescript-cheatsheets/react"
+                      },
+                      {
+                        "id": 75396575,
+                        "name": "react",
+                        "full_name": "duxianwei520/react"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/libraries/{id}": {
+      "get": {
+        "tags": [
+          "Library"
+        ],
+        "summary": "Get github library by id and metrics from open issues",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true,
+            "description": "ID of the library to get",
+            "example": "10270250"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return the library and open issues metrics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "example": {
+                    "response": {
+                      "id": 10270250,
+                      "full_name": "facebook/react",
+                      "openIssuesCount": 652,
+                      "averageTimeInDays": 512.05,
+                      "standardDeviationTimeInDays": 530.79
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metrics/libraries/{id}/collect": {
+      "post": {
+        "tags": [
+          "Metrics"
+        ],
+        "summary": "Responsible to start collect open issues metrics from a library on github to LibQuality. You can restore this data with the endpoint GET /libraries/{id} after collect",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true,
+            "description": "ID of the library to collect",
+            "example": "10270250"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "example": {
+                    "response": {
+                      "message": "Started Collecting..."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
