@@ -10,7 +10,8 @@ export default class MathUtils {
     let variance = dataset.reduce((total, data) => (total + ((data - average) ** 2)), 0);
 
     variance /= dataset.length;
-    variance = variance.toFixed(2);
-    return Math.sqrt(variance);
+    const standardDeviation = Math.sqrt(variance);
+
+    return Number(standardDeviation.toFixed(2));
   }
 }
