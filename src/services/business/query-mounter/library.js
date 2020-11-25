@@ -1,5 +1,5 @@
 export default class LibraryQueryMounter {
-  static getGithubLibraryQuery(filters) {
+  static getGithubLibraryQuery(filters = {}) {
     let query = '';
 
     if (filters.name) {

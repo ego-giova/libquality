@@ -28,7 +28,7 @@ routes.get('/',
       return ErrorHandler(err, req, res);
     }
 
-    return res.status(httpStatus.OK).json(response);
+    return res.status(httpStatus.OK).json({ response });
   });
 
 routes.get('/:id',
@@ -42,7 +42,7 @@ routes.get('/:id',
       return ErrorHandler(err, req, res);
     }
 
-    return res.status(httpStatus.OK).json(response);
+    return res.status(httpStatus.OK).json({ response });
   });
 
 export default routes;
