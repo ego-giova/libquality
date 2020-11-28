@@ -8,7 +8,7 @@
     "start-dev": "node --inspect index.js",
     "test": "jest",
     "build-docker": "docker build -t libquality:1.0.0 --no-cache .",
-    "run-docker": "docker run -p 3000:8080 -d libquality:1.0.0",
+    "run-docker": "docker run -p 8080:8080 -d libquality:1.0.0",
     "lint": "npx eslint --fix -c .eslintrc --ext .js ./src",
     "fix": "e./node_modules/.bin/eslint -c .eslintrc ./server --fix --ext .js"
   },

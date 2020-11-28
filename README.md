@@ -41,6 +41,14 @@ Access swagger documentation when the project is running.
 URL: http://localhost:8080/docs
 ```
 
+```sh
+The macro architecture is in the docs folder.
+```
+
+```sh
+In case you use the POSTMAN tool, here it is:
+https://www.getpostman.com/collections/51822ed73533a0924c5f
+```
 ## Author
 
 👤 **Jacomo Giovanetti**
