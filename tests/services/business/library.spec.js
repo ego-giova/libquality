@@ -1,9 +1,9 @@
-import GithubExternalService from '../../src/services/external/github';
-import LibraryService from '../../src/services/business/library';
+import GithubExternalService from '../../../src/services/external/github';
+import LibraryService from '../../../src/services/business/library';
 
-import BusinessError from '../../src/utils/errors/business';
+import BusinessError from '../../../src/utils/errors/business';
 
-jest.mock('../../src/services/external/github');
+jest.mock('../../../src/services/external/github');
 
 describe('services: library', () => {
   it('getGithubLibraries: should be able to throw an error when not found libraries', async () => {
