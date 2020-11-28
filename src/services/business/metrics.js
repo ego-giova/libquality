@@ -1,5 +1,8 @@
+/* eslint-disable no-underscore-dangle */
 import moment from 'moment';
+import httpStatus from 'http-status';
 import MathUtils from '../../utils/math';
+import BusinessError, { MetricsCodeError } from '../../utils/errors/business';
 import LibraryTrackRepository from '../../db/repositories/library-track';
 import GithubExternalService from '../external/github';
 
@@ -47,5 +50,42 @@ export default class MetricsService {
       openIssuesCount: response.open_issues_count,
       ...openIssuesMetrics,
     };
+  }
+
+  static async getLineChartStatistics(librariesId) {
+    let response = {};
+    const rawResponse = await LibraryTrackRepository.findLibrariesGroupedByDate(librariesId);
+
+    if (!rawResponse || !rawResponse.length) {
+      throw new BusinessError(MetricsCodeError.LIBRARIES_STATISTICS_NOT_FOUND, { status: httpStatus.NOT_FOUND });
+    }
+
+    response = {
+      dates: rawResponse.map((item) => item._id),
+      series: [],
+    };
+
+    rawResponse.forEach((item) => {
+      item.libraries.forEach((library) => {
+        let alreadyExist = response.series.find((libSeries) => libSeries.libraryId === library.libraryId);
+
+        if (!alreadyExist) {
+          response.series.push({
+            libraryId: library.libraryId,
+            libraryName: library.libraryName,
+            openIssuesCountData: [],
+            averageTimeInDaysData: [],
+            standardDeviationTimeInDaysData: [],
+          });
+          alreadyExist = response.series[response.series.length - 1];
+        }
+
+        alreadyExist.openIssuesCountData.push(library.openIssuesCount);
+        alreadyExist.averageTimeInDaysData.push(library.averageTimeInDays);
+        alreadyExist.standardDeviationTimeInDaysData.push(library.standardDeviationTimeInDays);
+      });
+    });
+
+    return response;
   }
 }
