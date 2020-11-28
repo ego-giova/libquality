@@ -19,12 +19,6 @@ npm install
 ```sh
 npm run start
 ```
-
-## Run tests
-
-```sh
-npm run test
-```
 ##### If you like, you can use docker to run the project.
 ```sh
 WARNING, use the commands below in the root of the project.
@@ -33,7 +27,11 @@ npm run build-docker
 npm run run-docker
 
 ```
+## Run tests
 
+```sh
+npm run test
+```
 ## Docs
 ```sh
 Access swagger documentation when the project is running.
