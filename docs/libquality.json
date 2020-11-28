@@ -38,25 +38,23 @@
                 "schema": {
                   "type": "object",
                   "properties": {},
-                  "example": {
-                    "response": [
-                      {
-                        "id": 10270250,
-                        "name": "react",
-                        "full_name": "facebook/react"
-                      },
-                      {
-                        "id": 135786093,
-                        "name": "react",
-                        "full_name": "typescript-cheatsheets/react"
-                      },
-                      {
-                        "id": 75396575,
-                        "name": "react",
-                        "full_name": "duxianwei520/react"
-                      }
-                    ]
-                  }
+                  "example": [
+                    {
+                      "id": 10270250,
+                      "name": "react",
+                      "full_name": "facebook/react"
+                    },
+                    {
+                      "id": 135786093,
+                      "name": "react",
+                      "full_name": "typescript-cheatsheets/react"
+                    },
+                    {
+                      "id": 75396575,
+                      "name": "react",
+                      "full_name": "duxianwei520/react"
+                    }
+                  ]
                 }
               }
             }
@@ -69,7 +67,7 @@
         "tags": [
           "Library"
         ],
-        "summary": "Get github library by id and metrics from open issues",
+        "summary": "Get github library and open issues metrics by library id",
         "parameters": [
           {
             "name": "id",
@@ -89,13 +87,11 @@
                   "type": "object",
                   "properties": {},
                   "example": {
-                    "response": {
-                      "id": 10270250,
-                      "full_name": "facebook/react",
-                      "openIssuesCount": 652,
-                      "averageTimeInDays": 512.05,
-                      "standardDeviationTimeInDays": 530.79
-                    }
+                    "id": 10270250,
+                    "full_name": "facebook/react",
+                    "openIssuesCount": 652,
+                    "averageTimeInDays": 512.05,
+                    "standardDeviationTimeInDays": 530.79
                   }
                 }
               }
@@ -129,9 +125,107 @@
                   "type": "object",
                   "properties": {},
                   "example": {
-                    "response": {
-                      "message": "Started Collecting..."
-                    }
+                    "message": "Started Collecting..."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found library",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "example": {
+                    "code": "github_repository_not_found",
+                    "message": "Request failed with status code 404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metrics/libraries": {
+      "get": {
+        "tags": [
+          "Metrics"
+        ],
+        "summary": "Get statistics from a set of libraries",
+        "parameters": [
+          {
+            "name": "librariesId",
+            "in": "query",
+            "type": "string",
+            "required": true,
+            "description": "IDs of the libraries to get the statistics",
+            "example": "24195339, 10270250"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return data to mount a line chart",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "example": {
+                    "dates": [
+                      "24-11-2020",
+                      "28-11-2020"
+                    ],
+                    "series": [
+                      {
+                        "libraryId": 24195339,
+                        "libraryName": "angular/angular",
+                        "openIssuesCountData": [
+                          2907,
+                          2911
+                        ],
+                        "averageTimeInDaysData": [
+                          742.32,
+                          743.91
+                        ],
+                        "standardDeviationTimeInDaysData": [
+                          499.69095449087325,
+                          502.06
+                        ]
+                      },
+                      {
+                        "libraryId": 10270250,
+                        "libraryName": "facebook/react",
+                        "openIssuesCountData": [
+                          652,
+                          658
+                        ],
+                        "averageTimeInDaysData": [
+                          512.05,
+                          511.43
+                        ],
+                        "standardDeviationTimeInDaysData": [
+                          530.79,
+                          530.81
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found statistics for requested libraries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "example": {
+                    "code": "not_found_statistics_for_requested_libraries"
                   }
                 }
               }
