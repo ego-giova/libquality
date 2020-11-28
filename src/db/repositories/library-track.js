@@ -25,4 +25,31 @@ export default class LibraryTrackRepository {
       throw new PersistenceError(err);
     }
   }
+
+  static async findLibrariesGroupedByDate(librariesId) {
+    try {
+      return LibraryTrackModel.aggregate([
+        { $match: { libraryId: { $in: librariesId } } },
+        {
+          $group: {
+            _id: {
+              $dateToString: { format: '%d-%m-%Y', date: '$createdAt' },
+            },
+            libraries: {
+              $push: {
+                libraryId: '$libraryId',
+                libraryName: '$libraryName',
+                openIssuesCount: '$metrics.open_issues.count',
+                averageTimeInDays: '$metrics.open_issues.averageTimeInDays',
+                standardDeviationTimeInDays: '$metrics.open_issues.standardDeviationTimeInDays',
+              },
+            },
+          },
+        },
+        { $sort: { _id: 1 } },
+      ]);
+    } catch (err) {
+      throw new PersistenceError(err);
+    }
+  }
 }
