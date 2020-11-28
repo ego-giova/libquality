@@ -4,7 +4,7 @@ import Constants from '../constants';
 
 export default class PersistenceError extends ExtendableError {
   constructor(err) {
-    super();
+    super(err);
     // Errors log
     // LoggerManager.sendNewRelic(err);
 
